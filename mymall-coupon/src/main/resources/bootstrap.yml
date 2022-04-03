@@ -1,12 +1,12 @@
 spring:
   application:
     name: coupon
-  datasource:
-    url: jdbc:mysql://192.168.1.100:3306/Mymall_sms
   cloud:
     nacos:
-      discovery:
+      config:
         namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
         server-addr: 192.168.1.100:1111
-server:
-  port: 7001
+        ext-config:
+          - data-id: datasource.yml
+            group: DEFAULT_GROUP
+            refresh: true

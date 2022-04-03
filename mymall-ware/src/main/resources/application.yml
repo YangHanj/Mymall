@@ -2,14 +2,11 @@ spring:
   application:
     name: ware
   datasource:
-    url: jdbc:mysql://192.168.1.100:3306/Mymall_oms
-    password: root
-    username: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto  #自增主键
+    url: jdbc:mysql://192.168.1.100:3306/Mymall_wms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.100:1111
+        namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
 server:
-  port: 11000
+  port: 11001
