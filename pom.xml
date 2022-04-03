@@ -26,6 +26,7 @@
         <module>mymall-ware</module>
         <module>renren-fast</module>
         <module>renren-generator</module>
+        <module>Mymall-common</module>
     </modules>
 
 </project>

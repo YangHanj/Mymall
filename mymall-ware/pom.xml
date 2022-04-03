@@ -26,5 +26,10 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>2.2.1.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>iee.yh</groupId>
+            <artifactId>Mymall-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
