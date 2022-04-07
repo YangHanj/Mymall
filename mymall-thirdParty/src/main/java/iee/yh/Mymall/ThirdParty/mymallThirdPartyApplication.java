@@ -1,15 +1,17 @@
-package iee.yh.Mymall.product;
+package iee.yh.Mymall.ThirdParty;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * @author yanghan
+ * @date 2022/4/7
+ */
 @SpringBootApplication
-@MapperScan(value = "iee.yh.Mymall.product.dao")
 @EnableDiscoveryClient
-public class mymallProductApplication {
+public class mymallThirdPartyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(mymallProductApplication.class,args);
+        SpringApplication.run(mymallThirdPartyApplication.class,args);
     }
 }

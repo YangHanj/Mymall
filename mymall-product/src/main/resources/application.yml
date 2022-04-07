@@ -2,7 +2,7 @@ spring:
   application:
     name: product
   datasource:
-    url: jdbc:mysql://192.168.1.100:3306/Mymall_pms
+    url: jdbc:mysql://192.168.1.100:3306/Mymall_pms?characterEncoding=utf8
   cloud:
     nacos:
       discovery:
@@ -10,3 +10,5 @@ spring:
         namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
 server:
   port: 10001
+
+

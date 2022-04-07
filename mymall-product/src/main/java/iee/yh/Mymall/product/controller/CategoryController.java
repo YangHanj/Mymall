@@ -1,6 +1,7 @@
 package iee.yh.Mymall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,14 +33,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * 列表,查出所有分类以及子分类，以树型结构显示
      */
-    @RequestMapping("/list")
+    @RequestMapping("/list/tree")
     //@RequiresPermissions("product:category:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
-
-        return R.ok().put("page", page);
+        List<CategoryEntity> entities = categoryService.listWithTree();
+        return R.ok().put("data", entities);
     }
 
 
@@ -49,9 +49,12 @@ public class CategoryController {
     @RequestMapping("/info/{catId}")
     //@RequiresPermissions("product:category:info")
     public R info(@PathVariable("catId") Long catId){
-		CategoryEntity category = categoryService.getById(catId);
-
-        return R.ok().put("category", category);
+        //防止获取到脏数据
+        //本次刷新过程不允许其他操作
+        synchronized (this){
+            CategoryEntity category = categoryService.getById(catId);
+            return R.ok().put("data", category);
+        }
     }
 
     /**
@@ -60,8 +63,12 @@ public class CategoryController {
     @RequestMapping("/save")
     //@RequiresPermissions("product:category:save")
     public R save(@RequestBody CategoryEntity category){
-		categoryService.save(category);
-
+        //首先查找数据库中是否存在
+        Integer sameCategory = categoryService.getSameCategory(category);
+        if (sameCategory != null){
+            categoryService.updateByIdForProduct(sameCategory);
+        }
+        else categoryService.save(category);
         return R.ok();
     }
 
@@ -81,9 +88,13 @@ public class CategoryController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:category:delete")
+    /**
+     * 利用@RequestBody
+     */
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
-
+        //1、检查当前需要删除的菜单是否被别的地方引用
+		//categoryService.removeByIds(Arrays.asList(catIds));
+        categoryService.removeMenuByIds(Arrays.asList(catIds));
         return R.ok();
     }
 

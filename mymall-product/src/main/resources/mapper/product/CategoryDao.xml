@@ -16,5 +16,15 @@
         <result property="productCount" column="product_count"/>
     </resultMap>
 
+    <select id="getSameCategory" parameterType="iee.yh.Mymall.product.entity.CategoryEntity" resultType="java.lang.Integer">
+        select cat_id from pms_category
+        where
+            name= #{name} and parent_cid=#{parentCid} and cat_level=#{catLevel}
+    </select>
 
+    <update id="updateByIdForProduct" parameterType="java.lang.Integer">
+        update pms_category set show_status = 1
+        where
+            cat_id = #{cat_id}
+    </update>
 </mapper>
