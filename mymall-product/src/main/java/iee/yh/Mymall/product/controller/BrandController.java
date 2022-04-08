@@ -1,10 +1,15 @@
 package iee.yh.Mymall.product.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import iee.yh.common.validator.group.AddGroup;
+import iee.yh.common.validator.group.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +21,7 @@ import iee.yh.Mymall.product.service.BrandService;
 import iee.yh.common.utils.PageUtils;
 import iee.yh.common.utils.R;
 
+import javax.validation.Valid;
 
 
 /**
@@ -35,7 +41,6 @@ public class BrandController {
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("product:brand:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = brandService.queryPage(params);
 
@@ -47,7 +52,6 @@ public class BrandController {
      * 信息
      */
     @RequestMapping("/info/{brandId}")
-    //@RequiresPermissions("product:brand:info")
     public R info(@PathVariable("brandId") Long brandId){
 		BrandEntity brand = brandService.getById(brandId);
 
@@ -58,10 +62,22 @@ public class BrandController {
      * 保存
      */
     @RequestMapping("/save")
-    //@RequiresPermissions("product:brand:save")
-    public R save(@RequestBody BrandEntity brand){
-		brandService.save(brand);
-
+    public R save(@RequestBody @Validated({AddGroup.class}) BrandEntity brand/*,BindingResult result*/){
+//        Map<String,String> map = new HashMap<>();
+//        if (result.hasErrors()){
+//            result.getFieldErrors().forEach(info -> {
+//                String message = info.getDefaultMessage();
+//                String field = info.getField();
+//                map.put(field,message);
+//            });
+//            return R.error(400,"数据不合法").put("data",map);
+//        }
+		try{
+            brandService.save(brand);
+        }
+        catch (Exception e){
+            throw e;
+        }
         return R.ok();
     }
 
@@ -69,10 +85,8 @@ public class BrandController {
      * 修改
      */
     @RequestMapping("/update")
-    //@RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand){
+    public R update(@RequestBody @Validated({UpdateGroup.class}) BrandEntity brand){
 		brandService.updateById(brand);
-
         return R.ok();
     }
 
@@ -80,7 +94,6 @@ public class BrandController {
      * 删除
      */
     @RequestMapping("/delete")
-    //@RequiresPermissions("product:brand:delete")
     public R delete(@RequestBody Long[] brandIds){
 		brandService.removeByIds(Arrays.asList(brandIds));
 
