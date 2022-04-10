@@ -1,11 +1,10 @@
 package iee.yh.Mymall.product.service.impl;
 
+import iee.yh.Mymall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,6 +17,7 @@ import iee.yh.common.utils.Query;
 import iee.yh.Mymall.product.dao.CategoryDao;
 import iee.yh.Mymall.product.entity.CategoryEntity;
 import iee.yh.Mymall.product.service.CategoryService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -91,4 +91,30 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         categoryDao.updateByIdForProduct(id);
     }
 
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths= new ArrayList<>();
+        findParentPath(catelogId,paths);
+        Collections.reverse(paths);
+        return (Long[]) paths.toArray(new Long[paths.size()]);
+    }
+
+    private void findParentPath(Long catelogId,List paths){
+        CategoryEntity byId = this.getById(catelogId);
+        paths.add(byId.getCatId());
+        if (byId.getParentCid() != 0){
+            findParentPath(byId.getParentCid(),paths);
+        }
+        return;
+    }
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
+    @Transactional
+    @Override
+    public void updateByIdDetail(CategoryEntity category) {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
+        //TODO 更新其他关联
+    }
 }

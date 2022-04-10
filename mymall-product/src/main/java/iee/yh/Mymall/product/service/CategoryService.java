@@ -25,5 +25,9 @@ public interface CategoryService extends IService<CategoryEntity> {
     Integer getSameCategory(CategoryEntity category);
 
     void updateByIdForProduct(Integer id);
+
+    Long[] findCatelogPath(Long catelogId);
+
+    void updateByIdDetail(CategoryEntity category);
 }
 

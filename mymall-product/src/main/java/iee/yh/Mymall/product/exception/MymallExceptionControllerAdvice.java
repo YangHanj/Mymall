@@ -23,9 +23,9 @@ public class MymallExceptionControllerAdvice {
 
     @ExceptionHandler(value = {Exception.class})
     public R handlerVailException(Exception e){
-        log.error("数据校验出现问题{},异常类型{}",e.getMessage(),e.getClass());
         Map<String,String> map = new HashMap<>();
         if (e instanceof MethodArgumentNotValidException){
+            log.error("数据校验出现问题{},异常类型{}",e.getMessage(),e.getClass());
             BindingResult bindingResult = ((MethodArgumentNotValidException)e).getBindingResult();
             bindingResult.getFieldErrors().forEach(info -> {
                 map.put(info.getField(),info.getDefaultMessage());
@@ -34,6 +34,7 @@ public class MymallExceptionControllerAdvice {
                     BizCode.VALID_EXCEPTION.getCode(),
                     BizCode.VALID_EXCEPTION.getMsg()).put("data",map);
         }else {
+            log.error("异常类型{}",e.getMessage());
             return R.error(BizCode.UNKNOW_EXCEPTION.getCode(),BizCode.UNKNOW_EXCEPTION.getMsg());
         }
     }
