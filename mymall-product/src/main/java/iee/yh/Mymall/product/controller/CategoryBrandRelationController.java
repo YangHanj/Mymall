@@ -1,11 +1,10 @@
 package iee.yh.Mymall.product.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import iee.yh.Mymall.product.entity.BrandEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +13,7 @@ import iee.yh.Mymall.product.service.CategoryBrandRelationService;
 import iee.yh.common.utils.PageUtils;
 import iee.yh.common.utils.R;
 
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -86,4 +86,16 @@ public class CategoryBrandRelationController {
         return R.ok();
     }
 
+    @GetMapping("/brands/list")
+    public R getBrandWithCategory(@RequestParam(value = "catId",required = true) @NotNull Long catId ){
+        List<BrandEntity> brandEntity = categoryBrandRelationService.getBrandWithCategory(catId);
+        List<Map<String, Object>> lmap = new ArrayList<>();
+        for (BrandEntity entity : brandEntity) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("brandId",entity.getBrandId());
+            map.put("brandName",entity.getName());
+            lmap.add(map);
+        }
+        return R.ok().put("data",lmap);
+    }
 }

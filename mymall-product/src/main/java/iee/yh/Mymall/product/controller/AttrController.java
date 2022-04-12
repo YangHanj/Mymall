@@ -33,9 +33,11 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
-    @RequestMapping("/base/list/{catelogId}")
-    public R basrAttrList(@RequestParam Map<String,Object> params,@PathVariable Long catelogId){
-        PageUtils page = attrService.queryBasePage(params,catelogId);
+    @RequestMapping("/{attrtype}/list/{catelogId}")
+    public R basrAttrList(@RequestParam Map<String,Object> params
+                                    ,@PathVariable Long catelogId
+                                    ,@PathVariable String attrtype){
+        PageUtils page = attrService.queryBasePage(params,catelogId,attrtype);
         return R.ok().put("page",page);
     }
 
@@ -82,6 +84,7 @@ public class AttrController {
 
         return R.ok();
     }
+
 
     /**
      * 删除
