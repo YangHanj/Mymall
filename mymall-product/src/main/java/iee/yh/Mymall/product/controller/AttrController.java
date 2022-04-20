@@ -1,17 +1,16 @@
 package iee.yh.Mymall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import iee.yh.Mymall.product.entity.ProductAttrValueEntity;
+import iee.yh.Mymall.product.service.ProductAttrValueService;
 import iee.yh.Mymall.product.vo.AttrResponseVo;
 import iee.yh.Mymall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import iee.yh.Mymall.product.entity.AttrEntity;
 import iee.yh.Mymall.product.service.AttrService;
@@ -32,6 +31,14 @@ import iee.yh.common.utils.R;
 public class AttrController {
     @Autowired
     private AttrService attrService;
+
+    @Autowired
+    private ProductAttrValueService productAttrValueService;
+    @GetMapping("/base/listforspu/{id}")
+    public R baseAttrListForSpu(@PathVariable("spuId") Long spuId){
+        List<ProductAttrValueEntity> productAttrValueEntities = productAttrValueService.baseAttrListForSpu(spuId);
+        return R.ok().put("data",productAttrValueEntities);
+    }
 
     @RequestMapping("/{attrtype}/list/{catelogId}")
     public R basrAttrList(@RequestParam Map<String,Object> params

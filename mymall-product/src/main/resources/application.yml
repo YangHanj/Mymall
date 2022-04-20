@@ -8,6 +8,8 @@ spring:
       discovery:
         server-addr: 192.168.1.100:1111
         namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 server:
   port: 10001
 

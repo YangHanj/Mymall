@@ -1,2 +1,8 @@
 server:
   port: 3001
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.100:1111
+        namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
