@@ -5,7 +5,7 @@ spring:
     nacos:
       config:
         namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
-        server-addr: 192.168.1.100:1111
+        server-addr: localhost:1111
         ext-config:
           - data-id: datasource.yml
             group: DEFAULT_GROUP

@@ -1,6 +1,5 @@
 package iee.yh.Mymall.product.service.impl;
 
-import iee.yh.Mymall.product.vo.AttrGroupRelationVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +10,12 @@ import java.util.stream.Collectors;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import iee.yh.common.utils.PageUtils;
 import iee.yh.common.utils.Query;
-
 import iee.yh.Mymall.product.dao.AttrAttrgroupRelationDao;
 import iee.yh.Mymall.product.entity.AttrAttrgroupRelationEntity;
+import iee.yh.Mymall.product.vo.AttrGroupRelationVo;
 import iee.yh.Mymall.product.service.AttrAttrgroupRelationService;
 
 
@@ -26,7 +26,7 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<AttrAttrgroupRelationEntity> page = this.page(
                 new Query<AttrAttrgroupRelationEntity>().getPage(params),
-                new QueryWrapper<AttrAttrgroupRelationEntity>()
+                new QueryWrapper<>()
         );
 
         return new PageUtils(page);
@@ -40,6 +40,7 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
             return attrgroupRelation;
         }).collect(Collectors.toList());
         super.saveBatch(collect);
+
     }
 
 }

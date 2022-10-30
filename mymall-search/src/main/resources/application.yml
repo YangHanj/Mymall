@@ -1,12 +1,8 @@
 spring:
-  application:
-    name: order
-  datasource:
-    url: jdbc:mysql://192.168.1.100:3306/Mymall_oms
   cloud:
     nacos:
       discovery:
         server-addr: localhost:8848
         namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
-server:
-  port: 9001
+  application:
+    name: search
