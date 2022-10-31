@@ -248,4 +248,15 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return new PageUtils(iPage);
     }
 
+    /**
+     * 查询可以被检索的属性
+     * select attr_id from 'pms_attr' where attr_id IN(?) AND search_type = 1
+     * @param attrIds
+     * @return
+     */
+    @Override
+    public List<Long> selectSearchAttrsIds(List<Long> attrIds) {
+        return this.baseMapper.selectSearchAttrsIds(attrIds);
+    }
+
 }

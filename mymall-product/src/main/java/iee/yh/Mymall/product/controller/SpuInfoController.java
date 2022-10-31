@@ -5,11 +5,7 @@ import java.util.Map;
 
 import iee.yh.Mymall.product.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import iee.yh.Mymall.product.entity.SpuInfoEntity;
 import iee.yh.Mymall.product.service.SpuInfoService;
@@ -27,6 +23,13 @@ import iee.yh.common.utils.R;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
+
+
+    @PostMapping("/{spuId}/up")
+    public R spuUp(@PathVariable("spuId") Long spuId){
+        spuInfoService.up(spuId);
+        return R.ok().put();
+    }
 
     /**
      * 列表

@@ -6,6 +6,7 @@ import iee.yh.Mymall.product.service.*;
 import iee.yh.Mymall.product.vo.*;
 import iee.yh.common.to.SkuReductionTo;
 import iee.yh.common.to.SpuBoundTo;
+import iee.yh.common.to.es.SkuEsModel;
 import iee.yh.common.utils.R;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -13,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -27,6 +26,7 @@ import iee.yh.common.utils.Query;
 import iee.yh.Mymall.product.dao.SpuInfoDao;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.xml.crypto.Data;
 
 
@@ -190,4 +190,61 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         );
         return new PageUtils(page);
     }
+
+    @Autowired
+    BrandService brandService;
+
+    @Resource
+    CategoryService categoryService;
+
+    @Override
+    public void up(Long spuId) {
+        List<SkuEsModel> upProducts = new ArrayList<>();
+
+        // 查询当前spuid对应的商品信息
+        List<SkuInfoEntity> skuInfoEntities = skuInfoService.getSkusBySpuId(spuId);
+
+        // 查询sku规格属性
+        List<ProductAttrValueEntity> productAttrValueEntities = productAttrValueService.baseAttrListForSpu(spuId);
+        List<Long> attrIds = productAttrValueEntities.stream().map( attr -> attr.getAttrId() ).collect(Collectors.toList());
+
+
+        List<Long> searchAttrIds =  attrService.selectSearchAttrsIds(attrIds);
+        Set<Long> idSet = new HashSet<>(searchAttrIds);
+
+        List<SkuEsModel.Attrs> collect = productAttrValueEntities.stream()
+                .filter(item -> idSet.contains(item.getAttrId()))
+                .map(item -> {
+                    SkuEsModel.Attrs attrs = new SkuEsModel.Attrs();
+                    BeanUtils.copyProperties(item, attrs);
+                    return attrs;
+                }).collect(Collectors.toList());
+
+
+        // 封装sku信息
+        skuInfoEntities.stream().map(sku -> {
+            // 商品上架
+            SkuEsModel skuEsModel = new SkuEsModel();
+            BeanUtils.copyProperties(sku,skuEsModel);
+            skuEsModel.setSkuPrice(sku.getPrice());
+            skuEsModel.setSkuImg(sku.getSkuDefaultImg());
+            //TODO 查询是否有库存
+            //TODO 热度评分
+
+            // 查询品牌和分类的名字信息
+            BrandEntity byId = brandService.getById(skuEsModel.getBrandId());
+            skuEsModel.setBrandImg(byId.getLogo());
+            skuEsModel.setBrandName(byId.getName());
+
+            CategoryEntity byId1 = categoryService.getById(skuEsModel.getCatalogId());
+            skuEsModel.setCatalogName(byId1.getName());
+
+            skuEsModel.setAttrs(collect);
+
+            return skuEsModel;
+        }).collect(Collectors.toList());
+
+        // todo 发送es执行保存 （search服务）
+
+;    }
 }
