@@ -22,6 +22,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -123,4 +127,49 @@ public class SearchTest {
             this.age = age;
         }
     }
+
+    public static String output = "";
+    public static void fun(int i){
+        try {
+            if (i == 1)
+                throw new Exception();
+        }catch (Exception e){
+            output += "2";
+            return;
+        }finally {
+            output += "3";
+        }
+        output += "4";
+    }
+    public static void main(String[] args) {
+        int[] arr = new int[10];
+        for (int i = 0; i < 10; i++) {
+            arr[i] = new Random().nextInt(30)+1;
+        }
+        fun(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    public static void doSomething(Integer integer){
+        integer = new Integer(2);
+    }
+    public static void fun(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int temp = arr[i];
+            int low = 0, high = i - 1;
+            int mid = -1;
+            while (low <= high) {
+                mid = low + (high - low) / 2;
+                if (arr[mid] > temp) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            for(int j = i - 1; j >= low; j--) {
+                arr[j + 1] = arr[j];
+            }
+            arr[low] = temp;
+        }
+    }
+
 }

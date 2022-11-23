@@ -1,8 +1,13 @@
 package iee.yh.Mymall.ware.service.impl;
 
+import iee.yh.Mymall.ware.vo.SkuHasstockVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -43,6 +48,19 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 queryWrapper
         );
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<SkuHasstockVo> getSKuHasStock(List<Long> skuIds) {
+        List<SkuHasstockVo> collect = skuIds.stream().map(sku -> {
+            SkuHasstockVo skuHasstockVo = new SkuHasstockVo();
+            // 查询当前sku的库存
+            Long count = baseMapper.getSkuStock(sku);
+            skuHasstockVo.setSkuId(sku);
+            skuHasstockVo.setHasstock(count == null ? false : count > 0);
+            return skuHasstockVo;
+        }).collect(Collectors.toList());
+        return collect;
     }
 
 }

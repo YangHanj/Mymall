@@ -3,6 +3,8 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
-        namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
+        namespace: 41643c50-f5c6-44d1-99e6-9febee1db0ea
   application:
     name: search
+server:
+  port: 12000

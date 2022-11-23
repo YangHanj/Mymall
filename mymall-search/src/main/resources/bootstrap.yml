@@ -1,9 +1,9 @@
 spring:
   application:
-    name: order
+    name: search
   cloud:
     nacos:
       config:
-        namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
+        namespace: 41643c50-f5c6-44d1-99e6-9febee1db0ea
         server-addr: localhost:8848
         

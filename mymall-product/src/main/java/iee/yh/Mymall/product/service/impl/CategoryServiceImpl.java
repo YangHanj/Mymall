@@ -117,4 +117,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
         //TODO 更新其他关联
     }
+
+    @Override
+    public List<CategoryEntity> getLeve1Categorys() {
+        return baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid",0));
+    }
 }
