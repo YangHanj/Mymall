@@ -5,7 +5,11 @@ import iee.yh.Mymall.product.mymallProductApplication;
 import iee.yh.Mymall.product.service.BrandService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -82,4 +86,19 @@ public class testdemo {
 //        System.out.println("!!!!");
 //    }
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    @Test
+    public void testDemo(){
+        System.out.println(redisTemplate);
+    }
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Test
+    public void testdemo2(){
+        System.out.println(redissonClient);
+    }
 }

@@ -6,14 +6,20 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:1111
+        server-addr: localhost:8848
         namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
+  redis:
+    host: 43.138.71.234
+    port: 6379
+    password: y1214X96jiao.
 
 server:
   port: 10001
+
+
 
 
