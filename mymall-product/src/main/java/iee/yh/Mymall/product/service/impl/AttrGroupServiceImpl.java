@@ -3,6 +3,7 @@ package iee.yh.Mymall.product.service.impl;
 import iee.yh.Mymall.product.entity.AttrEntity;
 import iee.yh.Mymall.product.service.AttrService;
 import iee.yh.Mymall.product.vo.AttrGroupWithAttrsVo;
+import iee.yh.Mymall.product.vo.SkuItemVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,12 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             return attrGroupWithAttrsVo;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public List<SkuItemVo.spuItemAttrGroupVo> getAttrGorupWithAttrsBySpuId(Long spuId,Long catalogId) {
+        List<SkuItemVo.spuItemAttrGroupVo> vos = this.baseMapper.getAttrGorupWithAttrsBySpuId(spuId,catalogId);
+        return vos;
     }
 
 }

@@ -13,5 +13,14 @@
         <result property="attrSort" column="attr_sort"/>
     </resultMap>
 
+    <select id="getSaleAttrsBySpuId">
+        <!--  TODO -->
+    </select>
+
+    <select id="getSkuSaleAttrValuesAsStringList" resultMap="java.lang.String">
+        select count(attr_name,": ",attr_value)
+        from pms_sku_sale_attr_value
+        where sku_id=#{sku_id}
+    </select>
 
 </mapper>

@@ -1,9 +1,8 @@
-package iee.yh.Mymall.Auth.vo;
+package iee.yh.Mymall.member.vo;
 
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author yanghan
@@ -11,11 +10,8 @@ import javax.validation.constraints.NotNull;
  */
 public class UserRegisterVo {
 
-    @NotEmpty(message = "username is not null")
-    @Length(min = 6,max = 18,message = "用户名长度需要6-18位")
     private String username;
-    @NotEmpty(message = "密码不能为空")
-    @Length(min = 6,max = 18,message = "密码长度需要6-18位")
+
     private String password;
 
     private String mail;

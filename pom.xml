@@ -29,5 +29,9 @@
         <module>Mymall-common</module>
         <module>mymall-thirdParty</module>
         <module>mymall-search</module>
+        <module>mymall-auth-server</module>
+        <module>sso-server</module>
+        <module>sso-client</module>
+        <module>mymall-cart</module>
     </modules>
 </project>

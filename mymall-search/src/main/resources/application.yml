@@ -6,5 +6,6 @@ spring:
         namespace: 41643c50-f5c6-44d1-99e6-9febee1db0ea
   application:
     name: search
+
 server:
   port: 12000

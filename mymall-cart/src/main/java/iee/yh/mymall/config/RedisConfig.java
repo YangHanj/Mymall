@@ -1,16 +1,12 @@
-package iee.yh.Mymall.product.config;
+package iee.yh.mymall.config;
 
-import org.redisson.Redisson;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 /**
@@ -19,15 +15,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
  */
 @Configuration
 @EnableConfigurationProperties(CacheProperties.class)
+@EnableCaching
 public class RedisConfig {
 
-    @Bean(name = "redisson",destroyMethod = "shutdown")
-    public RedissonClient redissonClient(){
-        Config config = new Config();
-        config.useSingleServer().setAddress("redis://43.138.71.234:6379").setDatabase(2).setPassword("y1214X96jiao.");
-
-        return Redisson.create(config);
-    }
 
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties){

@@ -1,12 +1,8 @@
-package iee.yh.Mymall.product.entity;
+package iee.yh.mymall.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * sku信息
@@ -16,14 +12,12 @@ import lombok.Data;
  * @date 2022-04-02 17:37:04
  */
 @Data
-@TableName("pms_sku_info")
-public class SkuInfoEntity implements Serializable {
+public class SkuInfoVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * skuId
 	 */
-	@TableId
 	private Long skuId;
 	/**
 	 * spuId

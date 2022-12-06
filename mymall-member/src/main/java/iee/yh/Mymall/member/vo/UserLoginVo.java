@@ -1,4 +1,4 @@
-package iee.yh.Mymall.Auth.vo;
+package iee.yh.Mymall.member.vo;
 
 /**
  * @author yanghan

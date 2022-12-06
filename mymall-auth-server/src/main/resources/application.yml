@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: auth-server
+  datasource:
+    url: jdbc:mysql://43.138.71.234:3306/Mymall_pms?characterEncoding=utf8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: 03d1ec9b-9e58-432f-aa10-ff7807e1306c
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+  mail:
+    host: smtp.163.com
+    default-encoding: UTF-8
+    username: yanghan1214@163.com
+    password: SRIXITEVFOXVCSXK
+  redis:
+    host: 43.138.71.234
+    port: 6379
+    password: y1214X96jiao.
+  session:
+    store-type: redis
+    timeout: 30m
+
+server:
+  port: 20000
+
+
+
+

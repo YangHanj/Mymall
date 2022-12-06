@@ -9,7 +9,7 @@ import java.util.List;
  * @author yanghan
  * @date 2022/11/26
  */
-public class SearchResponse {
+public class SearchResult {
 
     // 检索到的所有商品信息
     private List<SkuEsModel> products;
